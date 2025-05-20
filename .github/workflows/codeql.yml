@@ -1,0 +1,28 @@
+name: CodeQL
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 0 * * 0'  # runs weekly at midnight UTC on Sundays
+
+jobs:
+  analyze:
+    name: Analyze code with CodeQL
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: javascript  # include typescript if you use it: ["javascript","typescript"]
+
+      - name: Build project
+        run: npm install
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v2
